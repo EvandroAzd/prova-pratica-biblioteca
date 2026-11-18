@@ -13,15 +13,14 @@ Nome completo: ______Evandro Gabriel Campos de Azevedo___________  RA: _________
 
 **Em que consiste o problema, e o que acontece quando o sistema cresce:**
 
-R: O princiapl problema acontece em o método da classe reconhecer apena letras maisculas, acumular mais de uma função especifica, instaciar diretamente uma classe concreta e não estar preparada para receber outra base de consulta tendo que reescrever o código modicando talvez em mais lugares.
+O princiapl problema acontece em o método da classe reconhecer apena letras maisculas, acumular mais de uma função especifica, instaciar diretamente uma classe concreta e não estar preparada para receber outra base de consulta tendo que reescrever o código modicando talvez em mais lugares.
 
 **Princípio SOLID violado:**
 
-R: Principio OCP, SRP e DIP;
+SRP: CatalogoExemplares e RelatorioColecao têm, além da sua responsabilidade (filtrar disponíveis / montar o relatório), a responsabilidade de interpretar o formato do serviço legado;
 
 **Classes afetadas (pelo nome):**
-CatalogoExemplares
-AcervoLegadoWS
+CatalogoExemplares e RelatorioColecao (que duplicam a conversão e dependem de AcervoLegadoWS); AcervoLegadoWS é a origem do formato, mas não pode ser alterada.
 
 **Que outra dependência indevida essas classes têm em relação ao
 acervo central, e por que ela é um problema:**
@@ -34,12 +33,15 @@ A classe instacia o acervo, tendo acesso a tudo;
 
 **Em que consiste o problema, e o que acontece quando o sistema cresce:**
 
+Como a situação é texto, um erro de digitação (por exemplo "EMPRESTDO") compila e só aparece em execução. Quando o sistema crescer, cada novo estado (por exemplo ATRASADO ou RENOVADO) ou nova operação vai exigir abrir e alterar todos os métodos existentes, acumulando if/else e aumentando o risco de quebrar transições que já funcionavam.
 
 **Princípio SOLID violado:**
 
+OCP: A classe não está fechada para modificação: para estender o ciclo de vida com um novo estado é obrigatório modificar o código já existente de todos os métodos públicos.
 
 **Classes afetadas (pelo nome):**
 
+Emprestimo
 
 ---
 
