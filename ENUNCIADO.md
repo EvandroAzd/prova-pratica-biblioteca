@@ -4,7 +4,7 @@
 
 CST em Desenvolvimento de Software Multiplataforma — Fatec de Porto Ferreira
 
-Nome: ______________________________________________  RA: ______________
+Nome: ____Evandro Gabriel Campos de Azevedo______________  RA: ______________
 
 ## 1. Regras
 
