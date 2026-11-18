@@ -1,11 +1,5 @@
 package siga;
 
-/**
- * Demonstra os dois problemas e, ao final, roda a VerificacaoRapida.
- *
- * Voce VAI precisar alterar a montagem abaixo quando resolver o Problema 1
- * - e so isso. O resto do arquivo pode ficar como esta.
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -13,8 +7,9 @@ public class Main {
         System.out.println();
 
         AcervoLegadoWS legado = new AcervoLegadoWS();
-        CatalogoExemplares catalogo = new CatalogoExemplares(legado);
-        RelatorioColecao relatorio = new RelatorioColecao(legado);
+        FonteDeExemplares fonte = new AdaptadorAcervoLegado(legado);
+        CatalogoExemplares catalogo = new CatalogoExemplares(fonte);
+        RelatorioColecao relatorio = new RelatorioColecao(fonte);
 
         System.out.println("1) O mesmo dado, convertido em dois lugares");
         System.out.println("   Disponiveis segundo o catalogo:");
