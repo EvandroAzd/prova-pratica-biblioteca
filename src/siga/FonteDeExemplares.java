@@ -1,5 +1,7 @@
 package siga;
 
-public interface FonteDeExemplares {
+import java.util.List;
 
+public interface FonteDeExemplares {
+    List<Exemplar> listarExemplares();
 }
