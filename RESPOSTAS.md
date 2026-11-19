@@ -54,10 +54,10 @@ Emprestimo
 O sistema precisa usar um componente externo cuja interface (uma matriz `String[][]` com a situação em letra) é incompatível com a que as classes do sistema esperam (`List<Exemplar>`), e esse componente não pode ser alterado. A solução foi criar uma interface própria do sistema, `FonteDeExemplares`, com o método `listarExemplares()`, e uma classe `AdaptadorAcervoLegado` que implementa essa interface, guarda um `AcervoLegadoWS` e faz a tradução de um formato para o outro. Assim a conversão existe em um único lugar (o adaptador, já tratando maiúscula e minúscula), e `CatalogoExemplares` e `RelatorioColecao` passam a depender apenas da interface, sem nenhuma referência a `AcervoLegadoWS`. A ligação entre as peças é feita só na montagem, no `Main`.
 
 **Nome do padrão:**
-
+Adapter (padrão estrutural) — `FonteDeExemplares` é o alvo, `AcervoLegadoWS` é o adaptado e `AdaptadorAcervoLegado` é o adaptador.
 
 **Alternativa descartada e por que ela não resolveria por completo:**
-
+Alterar o serviço legado para devolver `List<Exemplar>` já convertida. Primeiro, não é possível: `AcervoLegadoWS` é mantido por outra equipe e o sistema não controla seu código. Segundo, mesmo que fosse possível, não resolveria por completo: as classes consumidoras continuariam dependendo da classe concreta do serviço externo (o problema de DIP permaneceria), e o domínio do sistema (`Exemplar`) passaria a ser conhecido por um componente de terceiros, acoplando ainda mais os dois lados. Qualquer troca de fonte ou teste isolado continuaria impossível.
 
 ## Padrão aplicado ao Problema 2
 
