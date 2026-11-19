@@ -1,62 +1,41 @@
 package siga;
 
 /**
- * PROBLEMA 2 - o ciclo de vida resolvido com condicionais sobre um campo
- * de texto.
+ * Ciclo de vida delegado as classes de fase (padrao State).
+ * As regras de transicao estao em FaseReservado, FaseEmprestado e
+ * FaseEncerrado.
  *
- * Tres sintomas: (a) as regras de transicao estao espalhadas pelos metodos
- * publicos, e ninguem le o ciclo de vida inteiro num lugar so; (b) um
- * estado novo exige alterar todos eles; e (c) a situacao e texto, entao um
- * erro de digitacao so aparece em execucao.
- *
- * Ciclo de vida vigente - E ELE QUE DEVE SER PRESERVADO:
  *   RESERVADO  --emprestar-->  EMPRESTADO
- *   RESERVADO  --anular-->  ENCERRADO
- *   EMPRESTADO  --restituir-->  ENCERRADO
- *   ENCERRADO e final: recusa as tres operacoes.
+ *   RESERVADO  --anular-->     ENCERRADO
+ *   EMPRESTADO --restituir-->  ENCERRADO
+ *   ENCERRADO e final.
  */
 public class Emprestimo {
 
     private final Leitor solicitante;
     private final Exemplar item;
+    private FaseEmprestimo fase;
 
     public Emprestimo(Leitor solicitante, Exemplar item) {
         this.solicitante = solicitante;
         this.item = item;
-        this.situacao = "RESERVADO";
+        this.fase = new FaseReservado();
     }
 
-    private String situacao;
-
     public String getSituacao() {
-        return situacao;
+        return fase.getNome();
     }
 
     public void emprestar() {
-        if ("RESERVADO".equals(situacao)) {
-            situacao = "EMPRESTADO";
-        } else {
-            throw new IllegalStateException(
-                    "Nao e possivel emprestar em " + situacao + ".");
-        }
+        fase = fase.emprestar();
     }
 
     public void restituir() {
-        if ("EMPRESTADO".equals(situacao)) {
-            situacao = "ENCERRADO";
-        } else {
-            throw new IllegalStateException(
-                    "Nao e possivel restituir em " + situacao + ".");
-        }
+        fase = fase.restituir();
     }
 
     public void anular() {
-        if ("RESERVADO".equals(situacao)) {
-            situacao = "ENCERRADO";
-        } else {
-            throw new IllegalStateException(
-                    "Nao e possivel anular em " + situacao + ".");
-        }
+        fase = fase.anular();
     }
 
     public Leitor getSolicitante() {
