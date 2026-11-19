@@ -62,9 +62,10 @@ Alterar o serviço legado para devolver `List<Exemplar>` já convertida. Primeir
 ## Padrão aplicado ao Problema 2
 
 **O problema que ele resolve (descreva antes de nomear o padrão):**
-
+Um objeto precisa se comportar de forma diferente conforme a fase em que está, e as regras de cada fase estavam espalhadas em condicionais. A solução foi representar cada fase como uma classe (`FaseReservado`, `FaseEmprestado`, `FaseEncerrado`), todas derivadas de `FaseEmprestimo`. A classe base recusa por padrão as três operações, com a mesma mensagem de antes; cada fase sobrescreve somente as transições que permite e devolve a fase seguinte. O `Emprestimo` guarda a fase atual e apenas delega: cada método público tem uma linha (`fase = fase.emprestar();`), sem nenhum `if`. O ciclo de vida pode ser lido abrindo as classes de fase, `getSituacao()` continua devolvendo `"RESERVADO"`, `"EMPRESTADO"` e `"ENCERRADO"`, e um novo estado passa a ser uma nova classe, sem alterar as existentes.
 
 **Nome do padrão:**
-
+State (padrão comportamental).
 
 **Alternativa descartada e por que ela não resolveria por completo:**
+Trocar a `String` por um `enum` simples (`RESERVADO, EMPRESTADO, ENCERRADO`). Isso resolveria só o erro de digitação, porque o compilador passaria a conferir os valores. Mas as regras de transição continuariam como `if`/`switch` dentro de `emprestar()`, `restituir()` e `anular()`: o ciclo de vida seguiria espalhado pelos métodos públicos, eles não ficariam com uma linha sem `if`, e um novo estado ainda exigiria alterar todos os métodos (o OCP continuaria violado). O `enum` muda o tipo da situação, não o lugar onde as regras moram.
