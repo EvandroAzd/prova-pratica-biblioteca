@@ -51,6 +51,7 @@ Emprestimo
 
 **O problema que ele resolve (descreva antes de nomear o padrão):**
 
+O sistema precisa usar um componente externo cuja interface (uma matriz `String[][]` com a situação em letra) é incompatível com a que as classes do sistema esperam (`List<Exemplar>`), e esse componente não pode ser alterado. A solução foi criar uma interface própria do sistema, `FonteDeExemplares`, com o método `listarExemplares()`, e uma classe `AdaptadorAcervoLegado` que implementa essa interface, guarda um `AcervoLegadoWS` e faz a tradução de um formato para o outro. Assim a conversão existe em um único lugar (o adaptador, já tratando maiúscula e minúscula), e `CatalogoExemplares` e `RelatorioColecao` passam a depender apenas da interface, sem nenhuma referência a `AcervoLegadoWS`. A ligação entre as peças é feita só na montagem, no `Main`.
 
 **Nome do padrão:**
 
